@@ -4,7 +4,7 @@ import { List, Input, Button } from 'antd';
 const ListItem = List.Item;
 
 export default function EmailConfigs({keyName, des, emails}) {
-    const items = emails.map(email => <ListItem key={email} actions={[<a>Delete</a>]}>{email}</ListItem>)
+    const items = emails.map(email => <ListItem key={email} actions={[<a href='/'>Delete</a>]}>{email}</ListItem>)
     
     return (
         <div style={{marginBottom: '20px'}}>
