@@ -31,3 +31,20 @@
 h2 {
   color: #6b6b6b
 }
+
+.main-content {
+  margin: 24px 16px;
+  padding: 24px;
+  background: #fff;
+  min-height: 1000px;
+}
+
+.main-content > div > div {
+  border: 1px solid lightgrey;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.ant-divider {
+  margin: 15px 0;
+}

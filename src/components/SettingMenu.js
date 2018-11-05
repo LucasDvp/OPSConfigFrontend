@@ -2,12 +2,44 @@ import { Layout, Menu, Icon } from 'antd';
 import React, { Component } from 'react'
 import MetadataSetting from './MetadataSetting'
 import RepoConfigs from './RepoConfigs'
+import '../App.css';
 
 const { Header, Sider, Content } = Layout;
 
 const SubMenu = Menu.SubMenu;
-const menuName = ['Docset1', 'Docset2', 'Repo Config'];
-
+const menuName = ['Docset1', 'Docset2', 'Configuration'];
+const docset1Metadatas = [
+    {
+        key: 'feedback_github_repo',
+        value: 'MicrosoftDocs/azure-docs'
+    },
+    {
+        key: 'feedback_product_url',
+        value: 'https://feedback.azure.com/forums/34192--general-feedback'
+    },
+    {
+        key: 'breadcrumb_path',
+        value: '/azure/bread/toc.json'
+    },
+    {
+        key: 'brand',
+        value: 'azure'
+    }
+];
+const docset2Metadatas = [
+    {
+        key: 'feedback_product_url',
+        value: 'https://feedback.azure.com/forums/34193--general-feedback'
+    },
+    {
+        key: 'breadcrumb_path',
+        value: '/azurelearning/bread/toc.json'
+    },
+    {
+        key: 'brand',
+        value: 'azure learning'
+    }
+];
 export default class SettingMenu extends Component {
     state = {
         collapsed: false,
@@ -29,16 +61,21 @@ export default class SettingMenu extends Component {
     }
 
     contentRender = (key) => {
-        if (key <= 1) {
-            return <MetadataSetting name={this.state.name}/>
-        } else {
-            return <RepoConfigs />
+
+        switch (parseInt(key))
+        {
+            case 2:
+                return <RepoConfigs />
+            case 1:
+                return <MetadataSetting name={this.state.name} metadatas={docset2Metadatas} isChecked={false}/>
+            case 0:
+            default:
+                return <MetadataSetting name={this.state.name} metadatas={docset1Metadatas} isChecked/>
         }
     }
 
     render() {
         const content = this.contentRender(this.state.selectedContent)
-        console.log(content);
         return (
             <Layout>
             <Sider
@@ -56,7 +93,7 @@ export default class SettingMenu extends Component {
                 style={{textAlign: 'left', padding: '20px 5px 20px 5px'}}
                 onClick={this.menuClick}
                 >
-                <SubMenu key="sub1" title={<span><Icon type="book" /><span>Docset Metadata</span></span>}>
+                <SubMenu key="sub1" title={<span><Icon type="book" /><span>Metadata</span></span>}>
                     <Menu.Item key="0">
                         <Icon type="book" />
                         <span>{menuName[0]}</span>
@@ -81,7 +118,7 @@ export default class SettingMenu extends Component {
                 />
                 <span style={{paddingLeft: "10px"}}>OPS Settings</span>
                 </Header>
-                <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 800 }}>
+                <Content className="main-content">
                     {content}
                 </Content>
             </Layout>

@@ -1,24 +1,19 @@
 import React from 'react'
-import { Input, Col, Button, Tooltip, Row } from 'antd';
+import { Input, Col, Button } from 'antd';
 
 const InputGroup = Input.Group;
 export default function OutputConfig({keyName, des, value}) {
-   
-    
     return (
         <div style={{marginTop: '20px'}}>
-            <h3>{keyName}</h3>
-            <InputGroup size="large" style={{display: 'flex', justifyContent: 'space-around', alignContent: 'center'}}>
-                <Col span={8}>
-                    <Input defaultValue={keyName} disabled={true} />
+            <InputGroup size="large" style={{ display: 'flex', marginTop: '10px', justifyContent: 'space-between'}}>
+                <Col span={10}>
+                    <Input defaultValue={keyName} />
                 </Col>
                 <Col span={8}>
                     <Input defaultValue={value} />
                 </Col>
-                <Col span={4}>
-                <Tooltip placement="right" title={des}>
-                    <Button>Description</Button>
-                </Tooltip>
+                <Col>
+                    <Button type='primary'>Delete</Button>
                 </Col>
             </InputGroup>
         </div>
