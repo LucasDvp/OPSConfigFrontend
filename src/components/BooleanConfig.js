@@ -3,7 +3,7 @@ import { Switch, Col, Tooltip, Icon } from 'antd'
 
 export default function BooleanConfig({keyName, des, checked}) {
     return (
-        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px'}}>
+        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', margin: '15px 0'}}>
             <div style={{display: 'flex'}}>
                 <h3>{keyName}</h3>
                 <Tooltip title={des}>

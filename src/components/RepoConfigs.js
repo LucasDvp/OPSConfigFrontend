@@ -14,10 +14,12 @@ export default class RepoConfigs extends Component {
                     <StringWithTitleConfig 
                     keyName='Git Repository URL open to public contributors'
                     des='The url of the git repository open to public contributors. If not specified, use current git repository url.' 
+                    value='https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md'
                     />
                     <StringWithTitleConfig 
                     keyName='Git Repository Branch open to public contributors'
                     des='The branch of the git repository open to public contributors. If not specified, use current git repository branch.'
+                    value='master'
                     />
                 </div>
                 <div>
