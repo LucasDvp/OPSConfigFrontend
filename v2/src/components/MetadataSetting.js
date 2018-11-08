@@ -1,10 +1,10 @@
 import React from 'react'
 import {Col, Button, Divider, Row} from 'antd';
 import BooleanConfig from './BooleanConfig';
-import StringConfig from './StringConfig';
+import MetadataItemConfig from './MetadataItemConfig';
 
 export default function MetadataSetting({ name, metadatas, isChecked }) {
-    const metadataItems = metadatas.map(metadata => <StringConfig key={metadata.key} keyName={metadata.key} des={metadata.des} value={metadata.value}/>)
+    const metadataItems = metadatas.map(metadata => <MetadataItemConfig key={metadata.key} keyName={metadata.key} fileJson={metadata.fileJson} hasFileMetadata={metadata.hasFileMetadata} value={metadata.value}/>)
 
     return (
         <div>

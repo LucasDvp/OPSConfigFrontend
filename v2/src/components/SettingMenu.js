@@ -11,6 +11,7 @@ const menuName = ['Docset1', 'Docset2', 'Configuration'];
 const docset1Metadatas = [
     {
         key: 'feedback_github_repo',
+        hasFileMetadata: true,
         value: 'MicrosoftDocs/azure-docs'
     },
     {
@@ -29,14 +30,20 @@ const docset1Metadatas = [
 const docset2Metadatas = [
     {
         key: 'feedback_product_url',
+        hasFileMetadata: true,
+        fileJson: '**/*.md',
         value: 'https://feedback.azure.com/forums/34193--general-feedback'
     },
     {
         key: 'breadcrumb_path',
+        hasFileMetadata: true,
+        fileJson: '**/build/*.yaml',
         value: '/azurelearning/bread/toc.json'
     },
     {
         key: 'brand',
+        hasFileMetadata: true,
+        fileJson: '**/*.md',
         value: 'azure learning'
     }
 ];
