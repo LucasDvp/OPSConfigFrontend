@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input,  Row, Tooltip, Icon } from 'antd';
+import { Input,  Row, Tooltip, Icon } from 'antd'
 
 export default function StringWithTitleConfig({keyName, des, value}) {
     return (
@@ -12,5 +12,5 @@ export default function StringWithTitleConfig({keyName, des, value}) {
             </div>
             <Input value={value} style={{margin: '10px 0'}} />
         </Row>
-    );
+    )
 }

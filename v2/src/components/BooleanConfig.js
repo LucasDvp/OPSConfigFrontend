@@ -14,5 +14,5 @@ export default function BooleanConfig({keyName, des, checked}) {
                 <Switch defaultChecked={checked} />
             </Col>
         </div>
-    );
+    )
 }

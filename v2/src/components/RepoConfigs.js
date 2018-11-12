@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import {Divider} from 'antd';
-import OutputConfig from './OutputConfig';
-import EmailConfigs from './EmailConfigs';
-import StringWithTitleConfig from './StringWithTitleConfig';
+import {Divider} from 'antd'
+import OutputConfig from './OutputConfig'
+import EmailConfigs from './EmailConfigs'
+import StringWithTitleConfig from './StringWithTitleConfig'
 
 export default class RepoConfigs extends Component {
     render(){
@@ -54,6 +54,6 @@ export default class RepoConfigs extends Component {
                     selected={['live-sxs']}/>
                 </div>
             </div>
-        );
+        )
     }
 }

@@ -1,13 +1,13 @@
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon } from 'antd'
 import React, { Component } from 'react'
 import MetadataSetting from './MetadataSetting'
 import RepoConfigs from './RepoConfigs'
-import '../App.css';
+import '../App.css'
 
-const { Header, Sider, Content } = Layout;
+const { Header, Sider, Content } = Layout
 
-const SubMenu = Menu.SubMenu;
-const menuName = ['Docset1', 'Docset2', 'Configuration'];
+const SubMenu = Menu.SubMenu
+const menuName = ['Docset1', 'Docset2', 'Configuration']
 const docset1Metadatas = [
     {
         key: 'feedback_github_repo',
@@ -26,7 +26,7 @@ const docset1Metadatas = [
         key: 'brand',
         value: 'azure'
     }
-];
+]
 const docset2Metadatas = [
     {
         key: 'feedback_product_url',
@@ -46,25 +46,75 @@ const docset2Metadatas = [
         fileJson: '**/*.md',
         value: 'azure learning'
     }
-];
+]
+const metadataSet = [
+    {
+        group: 'Feedback',
+        key: 'feedback product url',
+        type: 'string',
+        des: ''
+    },
+    {
+        group: 'Feedback',
+        key: 'feedback github repo',
+        type: 'string',
+        des: ''
+    },
+    {
+        group: 'Feedback',
+        key: 'feedback system',
+        type: 'string',
+        des: ''
+    },
+    {
+        group: 'Feedback',
+        key: 'product feedback displaytext',
+        type: 'string',
+        des: ''
+    },
+    {
+        group: 'BreadCrumb',
+        key: 'breadcrumb path',
+        type: 'string',
+        des: ''
+    },
+    {
+        group: 'BreadCrumb',
+        key: 'extend breadcrumb',
+        type: 'string',
+        des: ''
+    },
+    {
+        group: 'Contributor List',
+        key: 'author',
+        type: 'string',
+        des: ''
+    },
+    {
+        group: 'Contributor List',
+        key: 'contributors to exclude',
+        type: 'string',
+        des: ''
+    },
+]
 export default class SettingMenu extends Component {
     state = {
         collapsed: false,
         selectedContent: 0,
         name: menuName[0]
-    };
+    }
 
     toggle = () => {
     this.setState({
         collapsed: !this.state.collapsed,
-    });
+    })
     }
 
     menuClick = (e) => {
         this.setState({
             name: menuName[e.key],
             selectedContent: e.key
-        });
+        })
     }
 
     contentRender = (key) => {
@@ -74,10 +124,10 @@ export default class SettingMenu extends Component {
             case 2:
                 return <RepoConfigs />
             case 1:
-                return <MetadataSetting name={this.state.name} metadatas={docset2Metadatas} isChecked={false}/>
+                return <MetadataSetting name={this.state.name} metadatas={docset2Metadatas} isChecked={false} metadataSet={metadataSet} />
             case 0:
             default:
-                return <MetadataSetting name={this.state.name} metadatas={docset1Metadatas} isChecked/>
+                return <MetadataSetting name={this.state.name} metadatas={docset1Metadatas} isChecked metadataSet={metadataSet} />
         }
     }
 
@@ -130,6 +180,6 @@ export default class SettingMenu extends Component {
                 </Content>
             </Layout>
             </Layout>
-        );
+        )
     }
 }

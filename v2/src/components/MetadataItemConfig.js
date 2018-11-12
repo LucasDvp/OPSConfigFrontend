@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import { Input, Col, Button, Icon } from 'antd';
+import { Input, Col, Button, Icon } from 'antd'
 
-const InputGroup = Input.Group;
+const InputGroup = Input.Group
 export default class MetadataItemConfig extends Component {
 
     state = {
@@ -16,7 +16,7 @@ export default class MetadataItemConfig extends Component {
     }
 
     render() {
-        const { keyName, fileJson, value, hasFileMetadata=false } = this.props;
+        const { keyName, fileJson, value, hasFileMetadata=false } = this.props
         let fileMetadataContent = this.state.showInput ? 
            
             <Input addonBefore="File Scope" placeholder="default is global scope" defaultValue={fileJson} addonAfter={<a onClick={this.clickShowFileScopeToggle}><Icon type='check'/></a>}/>
@@ -40,6 +40,6 @@ export default class MetadataItemConfig extends Component {
                     </Col>
                 </InputGroup>
             </div>
-        );
+        )
     }
 }

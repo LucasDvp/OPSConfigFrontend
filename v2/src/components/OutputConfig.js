@@ -1,7 +1,7 @@
 import React from 'react'
-import { Select } from 'antd';
+import { Select } from 'antd'
 
-const Option = Select.Option;
+const Option = Select.Option
 
 export default function OutputConfig({keyName, des, branches, selected}) {
     const options = branches.map(branch => <Option key={branch}>{branch}</Option>)
@@ -18,5 +18,5 @@ export default function OutputConfig({keyName, des, branches, selected}) {
                 {options}
             </Select>
         </div>
-    );
+    )
 }

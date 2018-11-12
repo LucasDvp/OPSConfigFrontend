@@ -1,7 +1,7 @@
 import React from 'react'
-import { List, Input, Button } from 'antd';
+import { List, Input, Button } from 'antd'
 
-const ListItem = List.Item;
+const ListItem = List.Item
 
 export default function EmailConfigs({keyName, des, emails}) {
     const items = emails.map(email => <ListItem key={email} actions={[<a href='/'>Delete</a>]}>{email}</ListItem>)
@@ -18,5 +18,5 @@ export default function EmailConfigs({keyName, des, emails}) {
                 {items}
             </List>
         </div>
-    );
+    )
 }
