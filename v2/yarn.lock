@@ -8529,6 +8529,13 @@ react-slick@~0.23.2:
     prettier "^1.14.3"
     resize-observer-polyfill "^1.5.0"
 
+react-viewer@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/react-viewer/-/react-viewer-2.6.0.tgz#65d7b40e7c94d4f9eb97147ca752f11ecf7b5c36"
+  integrity sha512-KgDyUUgrAdf7dieP5tbtuumqOLcoemBwlTxxODx2v9v1guYIDUzx0Pa8Q/BtPuyd9CDhxunE5GPyrHdjsjiPmw==
+  dependencies:
+    classnames "^2.2.5"
+
 react@^16.6.0:
   version "16.6.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.6.0.tgz#b34761cfaf3e30f5508bc732fb4736730b7da246"

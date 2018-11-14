@@ -48,3 +48,7 @@ h2 {
 .ant-divider {
   margin: 15px 0;
 }
+
+.ant-tooltip-inner {
+  width: fit-content
+}

@@ -3,6 +3,7 @@ import {Col, Button, Divider, Row} from 'antd'
 import BooleanConfig from './BooleanConfig'
 import MetadataItemConfig from './MetadataItemConfig'
 import MetadataDiscovery from './MetadataDiscovery'
+import _ from 'lodash'
 
 export default class MetadataSetting extends Component {
 
@@ -10,11 +11,18 @@ export default class MetadataSetting extends Component {
         openAddMetadata: false
     }
 
-    clickToggleAddMetadata = () => {
-        const oldOpenAddMetadata = this.state.openAddMetadata
+    onToggleAddMetadata = () => {
+        console.log(this.state.openAddMetadata)
         this.setState({
-            openAddMetadata: !oldOpenAddMetadata
+            openAddMetadata: !this.state.openAddMetadata
         })
+    }
+
+    onSubmitMetadatas = (selectedMetadatas) => {
+        this.setState({
+            openAddMetadata: false,
+        })
+        this.props.addMetadataToPanel(selectedMetadatas)
     }
 
     render() {
@@ -42,13 +50,14 @@ export default class MetadataSetting extends Component {
                     size='large' 
                     icon='plus' 
                     style={{width: '100%', marginTop: '10px'}} 
-                    onClick={this.clickToggleAddMetadata}>
+                    onClick={this.onToggleAddMetadata}>
                         Add Metadata
                     </Button>
                 </div>
                 <MetadataDiscovery 
                 isOpen={this.state.openAddMetadata} 
-                onClose={this.clickToggleAddMetadata} 
+                onSubmitMetadatas={this.onSubmitMetadatas} 
+                onCancel={this.onToggleAddMetadata}
                 globalMetadatas={metadataSet}/>
             </div>
         )

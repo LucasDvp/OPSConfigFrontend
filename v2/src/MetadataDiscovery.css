@@ -1,0 +1,15 @@
+.second-drawer-content {
+    display: flex;
+    flex-direction: column;
+}
+.second-drawer-content > * {
+    margin-bottom: 15px
+}
+.no-detail-screenshoot {
+    background: #eee;
+    padding: 25px;
+    text-align: center;
+    font-size: 20px;
+    color: lightgrey;
+    font-weight: 700;
+}
