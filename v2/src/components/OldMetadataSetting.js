@@ -2,32 +2,23 @@ import React, { Component } from 'react'
 import {Col, Button, Divider} from 'antd'
 import BooleanConfig from './BooleanConfig'
 import MetadataItemConfig from './MetadataItemConfig'
-import MetadataDiscovery from './MetadataDiscovery'
+import _ from 'lodash'
 
-export default class MetadataSetting extends Component {
-
+export default class OldMetadataSetting extends Component {
     state = {
-        openAddMetadata: false
+        metadatas: this.props.metadatas
     }
 
-    onToggleAddMetadata = () => {
-        console.log(this.state.openAddMetadata)
+    onAddMetadata = () => {
         this.setState({
-            openAddMetadata: !this.state.openAddMetadata
+            metadatas: _.concat(this.state.metadatas, { key:'', value: '' })
         })
-    }
-
-    onSubmitMetadatas = (selectedMetadatas) => {
-        this.setState({
-            openAddMetadata: false,
-        })
-        this.props.addMetadataToPanel(selectedMetadatas)
     }
 
     render() {
-        const { name, metadatas, isChecked, metadataSet } = this.props
-        const metadataItems = metadatas.map(metadata => <MetadataItemConfig key={metadata.key} keyName={metadata.key} fileJson={metadata.fileJson} hasFileMetadata={metadata.hasFileMetadata} value={metadata.value}/>)
-
+        const { name } = this.props
+        const metadataItems = this.state.metadatas.map(metadata => <MetadataItemConfig showFileMetadata={false} key={metadata.key} keyName={metadata.key} fileJson={metadata.fileJson} hasFileMetadata={metadata.hasFileMetadata} value={metadata.value}/>)
+        
         return (
             <div>
                 <h2>{name}</h2>
@@ -40,7 +31,7 @@ export default class MetadataSetting extends Component {
                     <BooleanConfig 
                     keyName="Accepts community contributions" 
                     des="Select if your content accepts community contributions, adds a button to the rendered page which directs external users to a repository to submit pull requests" 
-                    checked={isChecked}/>
+                    checked={true}/>
                     
                     {metadataItems}
                     
@@ -49,15 +40,10 @@ export default class MetadataSetting extends Component {
                     size='large' 
                     icon='plus' 
                     style={{width: '100%', marginTop: '10px'}} 
-                    onClick={this.onToggleAddMetadata}>
+                    onClick={this.onAddMetadata}>
                         Add Metadata
                     </Button>
                 </div>
-                <MetadataDiscovery 
-                isOpen={this.state.openAddMetadata} 
-                onSubmitMetadatas={this.onSubmitMetadatas} 
-                onCancel={this.onToggleAddMetadata}
-                globalMetadatas={metadataSet}/>
             </div>
         )
     }

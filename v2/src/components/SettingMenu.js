@@ -5,11 +5,12 @@ import RepoConfigs from './RepoConfigs'
 import _ from 'lodash'
 import '../App.css'
 import detailImg from '../res/feedback_url_image.png'
+import OldMetadataSetting from './OldMetadataSetting';
 
 const { Header, Sider, Content } = Layout
 
 const SubMenu = Menu.SubMenu
-const menuName = ['Docset1', 'Docset2', 'Configuration']
+const menuName = ['Docset1', 'Docset2', 'Configuration', 'OldMetadata']
 const docset1Metadatas = [
     {
         key: 'feedback_github_repo',
@@ -153,6 +154,10 @@ export default class SettingMenu extends Component {
         console.log(key, this.state.docsetMetadata1, this.state.docsetMetadata2)
         switch (parseInt(key))
         {
+            case 3:
+                return <OldMetadataSetting 
+                name='Docset1'
+                metadatas={this.state.docsetMetadata1}/>
             case 2:
                 return <RepoConfigs />
             case 1:
@@ -205,6 +210,10 @@ export default class SettingMenu extends Component {
                 <Menu.Item key="2">
                     <Icon type="file-text" />
                     <span>{menuName[2]}</span>
+                </Menu.Item>
+                <Menu.Item key="3">
+                    <Icon type="diff" />
+                    <span>{menuName[3]}</span>
                 </Menu.Item>
                 </Menu>
             </Sider>

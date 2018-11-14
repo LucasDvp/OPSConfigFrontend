@@ -5,7 +5,6 @@ import '../MetadataDiscovery.css'
 import Viewer from 'react-viewer';
 import 'react-viewer/dist/index.css';
 
-
 const ListItem = List.Item
 const Search = Input.Search
 const TabPane = Tabs.TabPane 
@@ -132,8 +131,7 @@ export default class MetadataDiscovery extends Component {
             title="Add Metadata"
             width="450"
             visible={isOpen}
-            onClose={this.onClose}
-            maskClosable={false}>
+            onClose={this.onClose}>
                 <Search
                 enterButton='Search'
                 size='large'
