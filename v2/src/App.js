@@ -1,24 +1,18 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './App.css'
-import SettingMenu from './components/SettingMenu'
+import NewMetadata from './components/NewMetadata'
+import OldMetadata from './components/OldMetadata'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-class App extends Component {
-  state = {
-    isOpen: false
-  }
-  openMenu = () => {
-    const tmp = this.state.isOpen
-    this.setState({
-      isOpen : !tmp
-    })
-  }
-  render() {
-    return (
+
+const OldConfig = () => <h2>hehe</h2>
+export default function App() {
+  return (
+    <Router>
       <div className="App">
-        <SettingMenu />
+        <Route exact path='/' component={NewMetadata}/>
+        <Route path='/old' component={OldMetadata}/>
       </div>
-    )
-  }
+    </Router>
+  )
 }
-
-export default App

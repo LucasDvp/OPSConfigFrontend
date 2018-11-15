@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, Button, Drawer, Input, Tabs, Tag, Row, Col, Alert } from 'antd'
+import { List, Button, Drawer, Input, Tabs, Tag, Row, Col, Alert, Badge } from 'antd'
 import _ from 'lodash'
 import '../MetadataDiscovery.css'
 import Viewer from 'react-viewer';
@@ -29,6 +29,10 @@ export default class MetadataDiscovery extends Component {
     
     state = this.initState
 
+    componentWillReceiveProps = (o, nextProps) => {
+        this.setState(this.initState)
+    }
+
     get initState()  {
         return {
             metadatas: this.props.globalMetadatas.map(metadata => _.assign(metadata, {isSelected: false})),
@@ -37,6 +41,7 @@ export default class MetadataDiscovery extends Component {
             secondDrawerDes: '',
             secondDrawerGroup: '',
             secondDrawerImageDetail: '',
+            secondDrawerType: '',
             imageVisible: false
         }
     }
@@ -52,7 +57,7 @@ export default class MetadataDiscovery extends Component {
     }
 
     onSubmitMetadatas = () => {
-        const selectedMetadatas = _.map(_.filter(this.state.metadatas, {isSelected: true}), metadata => metadata.value)
+        const selectedMetadatas = _.filter(this.state.metadatas, {isSelected: true})
         this.setState(this.initState)
         this.props.onSubmitMetadatas(selectedMetadatas)
     }
@@ -76,6 +81,7 @@ export default class MetadataDiscovery extends Component {
                 secondDrawerOpen: true,
                 secondDrawerTitle: metadata.key,
                 secondDrawerDes: metadata.des,
+                secondDrawerType: metadata.type,
                 secondDrawerGroup: metadata.group,
                 secondDrawerImageDetail: metadata.imgUrl
             })
@@ -92,16 +98,16 @@ export default class MetadataDiscovery extends Component {
             type='dashed'  
             onClick={this.onToggleSecondDrawer(metadata)}>Detail</Button>]}>
                 <ListItem.Meta
+                style={{width: '180px'}}
                 title={<TitleBox title={metadata.key} groupName={metadata.group}/>}
                 description={metadata.des}/>
             </ListItem>
         ))
-        
+        const listContainerStyle = { height: '780px', overflowY: 'auto' }
         const groupedMetadata = _.groupBy(this.state.metadatas, 'group')
-
         const groupedMetadataItems = _.keys(groupedMetadata).map((groupName, index) => (
             <TabPane tab={groupName} key={index+1}>
-                <List size='large'>
+                <List size='large' style={listContainerStyle}>
                     {
                        groupedMetadata[groupName].map(child => (
                            <ListItem actions={[
@@ -110,8 +116,9 @@ export default class MetadataDiscovery extends Component {
                            type='dashed' 
                            onClick={this.onToggleSecondDrawer(child)}>Detail</Button>]}>
                                <ListItem.Meta
+                               style={{width: '180px'}}
                                 title={<TitleBox title={child.key} groupName={groupName}/>}
-                               description={child.des}/>
+                                description={child.des}/>
                             </ListItem>
                        )) 
                     }
@@ -120,10 +127,10 @@ export default class MetadataDiscovery extends Component {
         ))
 
         const detailImageDiv = _.isEmpty(this.state.secondDrawerImageDetail) ? 
-        <span className='no-detail-screenshoot'>No Detail ScreenShoot</span> :
+        <span className='no-detail-screenshot'>No Detail ScreenShot</span> :
         <img 
         src={this.state.secondDrawerImageDetail}
-        alt='No Detail ScreenShoot'
+        alt='No Detail ScreenShot'
         onClick={() => {this.setState({ imageVisible: !this.state.imageVisible })}} />  
 
         return (
@@ -138,24 +145,29 @@ export default class MetadataDiscovery extends Component {
                 placeholder='Seach Metadata'/>
                 <Tabs style={{marginTop: '20px'}} defaultActiveKey="0" onChange={this.onTabClick}>
                     <TabPane tab='All' key='0'>
-                        <List size='large'>
+                        <List size='large' style={listContainerStyle}>
                             {allMetadatas}
                         </List>
                     </TabPane >
                     {groupedMetadataItems}
                 </Tabs>
-                <Button
+                <div
                 style={{
                     position: 'absolute',
                     bottom: 0,
                     left: 0,
-                    width: '100%'
-                }}
-                onClick={this.onSubmitMetadatas} 
-                type="primary" 
-                size='large'>
-                    Add
-                </Button>
+                    padding: '24px',
+                    width: '100%',
+                    backgroundColor: 'white'
+                }}>
+                    <Button
+                    block
+                    onClick={this.onSubmitMetadatas} 
+                    type="primary" 
+                    size='large'>
+                        Add
+                    </Button>
+                </div>
                 <Drawer
                 title={this.state.secondDrawerTitle}
                 width={400}
@@ -165,15 +177,18 @@ export default class MetadataDiscovery extends Component {
                 >
                     <div className='second-drawer-content'>
                         <div>Metadata Group: <Tag color='blue'>{this.state.secondDrawerGroup}</Tag></div>
+                        <div>Metadata Type: <Tag color='purple'>{this.state.secondDrawerType}</Tag></div>
+                        <div>Used Count: <Tag color='cyan'>109</Tag></div>
                         <Alert 
                         type='success' 
                         description={_.isEmpty(this.state.secondDrawerDes) ? 'No Description' : this.state.secondDrawerDes} 
                         message='Description'/>
+                        <p>Metadata ScreenShot: </p>
                         {detailImageDiv}
                         <Viewer
                         visible={this.state.imageVisible}
                         onClose={() => { this.setState({ imageVisible: false }); } }
-                        images={[{src: this.state.secondDrawerImageDetail, alt: 'Docs ScreenShoot Details'}]}
+                        images={[{src: this.state.secondDrawerImageDetail, alt: 'Docs ScreenShot Details'}]}
                         />
                     </div>
                 </Drawer>

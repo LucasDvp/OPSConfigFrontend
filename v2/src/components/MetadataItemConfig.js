@@ -16,7 +16,8 @@ export default class MetadataItemConfig extends Component {
     }
 
     render() {
-        const { keyName, fileJson, value, hasFileMetadata=false, showFileMetadata=true } = this.props
+        const { keyName, fileJson, value, hasFileMetadata=false, showFileMetadata=true, hint } = this.props
+        console.log('hehe', hint, value)
         let fileMetadataContent = this.state.showInput ? 
            
             <Input addonBefore="File Scope" placeholder="default is global scope" defaultValue={fileJson} addonAfter={<a onClick={this.clickShowFileScopeToggle}><Icon type='check'/></a>}/>
@@ -30,7 +31,7 @@ export default class MetadataItemConfig extends Component {
                         <Input defaultValue={keyName} />
                     </Col>
                     <Col span={6}>
-                        <Input defaultValue={value} />
+                        <Input defaultValue={value} placeholder={hint} />
                     </Col>
                     <Col style={{display: showFileMetadata ? 'default' : 'none' }}>
                         {fileMetadataContent}

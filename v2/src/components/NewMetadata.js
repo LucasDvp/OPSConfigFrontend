@@ -1,16 +1,16 @@
-import { Layout, Menu, Icon } from 'antd'
+import { Layout, Menu, Icon, Button, message } from 'antd'
 import React, { Component } from 'react'
 import MetadataSetting from './MetadataSetting'
 import RepoConfigs from './RepoConfigs'
 import _ from 'lodash'
 import '../App.css'
 import detailImg from '../res/feedback_url_image.png'
-import OldMetadataSetting from './OldMetadataSetting';
+import MetadataRegister from './MetadataRegister';
 
 const { Header, Sider, Content } = Layout
 
 const SubMenu = Menu.SubMenu
-const menuName = ['Docset1', 'Docset2', 'Configuration', 'OldMetadata']
+const menuName = ['Docset1', 'Docset2', 'Configuration']
 const docset1Metadatas = [
     {
         key: 'feedback_github_repo',
@@ -109,13 +109,15 @@ const metadataSet = [
         des: ''
     },
 ]
-export default class SettingMenu extends Component {
+export default class NewMetadata extends Component {
     state = {
         collapsed: false,
         selectedContent: 0,
         name: menuName[0],
         docsetMetadata1: docset1Metadatas,
-        docsetMetadata2: docset2Metadatas
+        docsetMetadata2: docset2Metadatas,
+        metadataSet: metadataSet,
+        showMetadataRegister: false
     }
 
     toggle = () => {
@@ -132,8 +134,34 @@ export default class SettingMenu extends Component {
     }
 
     addMetadataToPanel = (valuesToBeAdded) => {
-        valuesToBeAdded = valuesToBeAdded.map(item => ({ key: item, value: '' }))
-        console.log(this.state.selectedContent, valuesToBeAdded)
+        valuesToBeAdded = valuesToBeAdded.map(item => {
+            let hintValue = null
+            if (item.type) {
+                //'bool', 'string', 'number', 'object', 'one or many'
+                switch (item.type) {
+                    case 'bool':
+                        hintValue = 'Boolean value: true/false'
+                        break;
+                    case 'number':
+                        hintValue = 'Number value: integer/float/double'
+                        break;
+                    case 'object':
+                        hintValue = 'JSON object value: {"a": "a value"}'
+                        break;
+                    case 'one or many':
+                        hintValue = 'One or many value: string/string[]'
+                        break;
+                    case 'string':
+                    default:
+                        hintValue = 'String value'
+                        break;
+                }
+            }
+            item.value = ''
+            item.hint = hintValue
+            return item
+        })
+        console.log(valuesToBeAdded)
         if (parseInt(this.state.selectedContent) === 0)
         {
             this.setState({
@@ -145,19 +173,26 @@ export default class SettingMenu extends Component {
             this.setState({
                 docsetMetadata2: _.uniqBy(_.concat(this.state.docsetMetadata2, valuesToBeAdded), 'key')
             })
-        }
-        
+        }    
+    }
+
+    onAddMetadataSet = (newMetadata) => {
+        this.setState({
+            metadataSet: _.concat(this.state.metadataSet, newMetadata),
+            showMetadataRegister: false
+        })
+        message.success("New metadata has registed.")
+    }
+
+    onToggleMetadataRegister = () => {
+        this.setState({
+            showMetadataRegister: !this.state.showMetadataRegister
+        })
     }
 
     contentRender = (key) => {
-
-        console.log(key, this.state.docsetMetadata1, this.state.docsetMetadata2)
         switch (parseInt(key))
         {
-            case 3:
-                return <OldMetadataSetting 
-                name='Docset1'
-                metadatas={this.state.docsetMetadata1}/>
             case 2:
                 return <RepoConfigs />
             case 1:
@@ -165,7 +200,7 @@ export default class SettingMenu extends Component {
                 name={this.state.name} 
                 metadatas={this.state.docsetMetadata2} 
                 isChecked={false} 
-                metadataSet={metadataSet}
+                metadataSet={this.state.metadataSet}
                 addMetadataToPanel={this.addMetadataToPanel} />
             case 0:
             default:
@@ -173,7 +208,7 @@ export default class SettingMenu extends Component {
                 name={this.state.name} 
                 metadatas={this.state.docsetMetadata1} 
                 isChecked 
-                metadataSet={metadataSet}
+                metadataSet={this.state.metadataSet}
                 addMetadataToPanel={this.addMetadataToPanel} />
         }
     }
@@ -211,23 +246,30 @@ export default class SettingMenu extends Component {
                     <Icon type="file-text" />
                     <span>{menuName[2]}</span>
                 </Menu.Item>
-                <Menu.Item key="3">
-                    <Icon type="diff" />
-                    <span>{menuName[3]}</span>
-                </Menu.Item>
                 </Menu>
             </Sider>
             <Layout>
-                <Header style={{ background: '#fff', fontSize: '20px', fontWeight: '500', textAlign: 'left'}}>
-                <Icon
+                <Header style={{ background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                <div style={{ background: '#fff', fontSize: '20px', fontWeight: '500', textAlign: 'left'}}>
+                    <Icon
                     className="trigger"
                     type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                     onClick={this.toggle}
-                />
-                <span style={{paddingLeft: "10px"}}>OPS Settings</span>
+                    />
+                    <span style={{paddingLeft: "10px"}}>OPS Settings</span>
+                </div>
+                <Button type='primary' icon='setting' onClick={this.onToggleMetadataRegister}>
+                    Metadata Register
+                </Button>
                 </Header>
                 <Content className="main-content">
                     {content}
+                    <MetadataRegister 
+                    metadataSet={this.state.metadataSet} 
+                    onAddMetadataSet={this.onAddMetadataSet} 
+                    onClose={this.onToggleMetadataRegister}
+                    showMetadataRegister={this.state.showMetadataRegister}
+                    />
                 </Content>
             </Layout>
             </Layout>

@@ -11,7 +11,6 @@ export default class MetadataSetting extends Component {
     }
 
     onToggleAddMetadata = () => {
-        console.log(this.state.openAddMetadata)
         this.setState({
             openAddMetadata: !this.state.openAddMetadata
         })
@@ -26,7 +25,7 @@ export default class MetadataSetting extends Component {
 
     render() {
         const { name, metadatas, isChecked, metadataSet } = this.props
-        const metadataItems = metadatas.map(metadata => <MetadataItemConfig key={metadata.key} keyName={metadata.key} fileJson={metadata.fileJson} hasFileMetadata={metadata.hasFileMetadata} value={metadata.value}/>)
+        const metadataItems = metadatas.map(metadata => <MetadataItemConfig key={metadata.key} keyName={metadata.key} fileJson={metadata.fileJson} hasFileMetadata={metadata.hasFileMetadata} value={metadata.value} hint={metadata.hint}/>)
 
         return (
             <div>
