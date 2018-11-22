@@ -9,6 +9,12 @@ export default class OldMetadataSetting extends Component {
         metadatas: this.props.metadatas
     }
 
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({
+            metadatas: nextProps.metadatas
+        })
+    }
+
     onAddMetadata = () => {
         this.setState({
             metadatas: _.concat(this.state.metadatas, { key:'', value: '' })

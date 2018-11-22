@@ -100,7 +100,7 @@ export default class MetadataDiscovery extends Component {
                 <ListItem.Meta
                 style={{width: '180px'}}
                 title={<TitleBox title={metadata.key} groupName={metadata.group}/>}
-                description={metadata.des}/>
+                description={<p style={{width: '180px'}}>{metadata.des}</p>}/>
             </ListItem>
         ))
         const listContainerStyle = { height: '780px', overflowY: 'auto' }
@@ -118,7 +118,7 @@ export default class MetadataDiscovery extends Component {
                                <ListItem.Meta
                                style={{width: '180px'}}
                                 title={<TitleBox title={child.key} groupName={groupName}/>}
-                                description={child.des}/>
+                                description={<p style={{width: '180px'}}>{child.des}</p>}/>
                             </ListItem>
                        )) 
                     }

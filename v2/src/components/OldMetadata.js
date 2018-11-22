@@ -1,11 +1,14 @@
 import { Layout, Menu, Icon, Button, message } from 'antd'
 import React, { Component } from 'react'
 import OldMetadataSetting from './OldMetadataSetting';
+import RepoConfigs from './RepoConfigs'
 
 const { Header, Sider, Content } = Layout
 
 const SubMenu = Menu.SubMenu
-const docsetMetadatas = [
+const menuName = ['Docset1', 'Docset2', 'Configuration']
+
+const docset1Metadatas = [
     {
         key: 'feedback_github_repo',
         hasFileMetadata: true,
@@ -24,10 +27,32 @@ const docsetMetadatas = [
         value: 'azure'
     }
 ]
-
+const docset2Metadatas = [
+    {
+        key: 'feedback_product_url',
+        hasFileMetadata: true,
+        fileJson: '**/*.md',
+        value: 'https://feedback.azure.com/forums/34193--general-feedback'
+    },
+    {
+        key: 'breadcrumb_path',
+        hasFileMetadata: true,
+        fileJson: '**/build/*.yaml',
+        value: '/azurelearning/bread/toc.json'
+    }
+]
 export default class NewMetadata extends Component {
     state = {
-        collapsed: false
+        collapsed: false,
+        selectedContent: 0,
+        name: menuName[0]
+    }
+
+    menuClick = (e) => {
+        this.setState({
+            name: menuName[e.key],
+            selectedContent: e.key
+        })
     }
 
     toggle = () => {
@@ -36,8 +61,25 @@ export default class NewMetadata extends Component {
         })
     }
 
+    contentRender = (key) => {
+        switch (parseInt(key))
+        {
+            case 2:
+                return <RepoConfigs />
+            case 1:
+                return <OldMetadataSetting 
+                name={this.state.name} 
+                metadatas={docset2Metadatas} />
+            case 0:
+            default:
+                return <OldMetadataSetting 
+                name={this.state.name} 
+                metadatas={docset1Metadatas} />
+        }
+    }
+
     render() {
-        const content = <OldMetadataSetting name='Docset1' metadatas={docsetMetadatas}/>
+        const content = this.contentRender(this.state.selectedContent)
         return (
             <Layout>
             <Sider
@@ -55,9 +97,19 @@ export default class NewMetadata extends Component {
                 style={{textAlign: 'left', padding: '20px 5px 20px 5px'}}
                 onClick={this.menuClick}
                 >
-                <Menu.Item key="0">
+                <SubMenu key="sub1" title={<span><Icon type="book" /><span>Metadata</span></span>}>
+                    <Menu.Item key="0">
+                        <Icon type="book" />
+                        <span>{menuName[0]}</span>
+                    </Menu.Item>
+                    <Menu.Item key="1">
+                        <Icon type="book" />
+                        <span>{menuName[1]}</span>
+                    </Menu.Item>
+                </SubMenu>
+                <Menu.Item key="2">
                     <Icon type="file-text" />
-                    <span>Docset1</span>
+                    <span>{menuName[2]}</span>
                 </Menu.Item>
                 </Menu>
             </Sider>
@@ -67,8 +119,7 @@ export default class NewMetadata extends Component {
                     <Icon
                     className="trigger"
                     type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                    onClick={this.toggle}
-                    />
+                    onClick={this.toggle} />
                     <span style={{paddingLeft: "10px"}}>OPS Settings</span>
                 </div>
                 </Header>

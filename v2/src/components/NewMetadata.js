@@ -161,7 +161,6 @@ export default class NewMetadata extends Component {
             item.hint = hintValue
             return item
         })
-        console.log(valuesToBeAdded)
         if (parseInt(this.state.selectedContent) === 0)
         {
             this.setState({
