@@ -8,7 +8,7 @@ import 'react-viewer/dist/index.css';
 const ListItem = List.Item
 const Search = Input.Search
 const TabPane = Tabs.TabPane 
-const colors = ['magenta', 'orange', 'green']
+const colors = ['magenta', 'orange', 'green', 'yellow', 'orange', 'cyan', 'blue', 'purple']
 function MetadataButton({ isSelected, onToggleMetadata }) {
     return (
         <Button type={isSelected ? 'danger' : 'primary'} onClick={onToggleMetadata}>
@@ -92,15 +92,17 @@ export default class MetadataDiscovery extends Component {
         const { isOpen } = this.props
         
         const allMetadatas = this.state.metadatas.map(metadata => (
-            <ListItem actions={[
+            <ListItem 
+            key={metadata.key}
+            actions={[
             <MetadataButton isSelected={metadata.isSelected} onToggleMetadata={this.onToggleMetadata(metadata.key)}/>,
             <Button 
             type='dashed'  
             onClick={this.onToggleSecondDrawer(metadata)}>Detail</Button>]}>
                 <ListItem.Meta
-                style={{width: '180px'}}
+                
                 title={<TitleBox title={metadata.key} groupName={metadata.group}/>}
-                description={<p style={{width: '180px'}}>{metadata.des}</p>}/>
+                description={<p>{metadata.des}</p>}/>
             </ListItem>
         ))
         const listContainerStyle = { height: '780px', overflowY: 'auto' }
@@ -110,15 +112,16 @@ export default class MetadataDiscovery extends Component {
                 <List size='large' style={listContainerStyle}>
                     {
                        groupedMetadata[groupName].map(child => (
-                           <ListItem actions={[
+                           <ListItem 
+                           key={child.key}
+                           actions={[
                            <MetadataButton isSelected={child.isSelected} onToggleMetadata={this.onToggleMetadata(child.key)}/>,
                            <Button 
                            type='dashed' 
                            onClick={this.onToggleSecondDrawer(child)}>Detail</Button>]}>
                                <ListItem.Meta
-                               style={{width: '180px'}}
                                 title={<TitleBox title={child.key} groupName={groupName}/>}
-                                description={<p style={{width: '180px'}}>{child.des}</p>}/>
+                                description={<p >{child.des}</p>}/>
                             </ListItem>
                        )) 
                     }
@@ -136,7 +139,7 @@ export default class MetadataDiscovery extends Component {
         return (
             <Drawer 
             title="Add Metadata"
-            width="450"
+            width="60%"
             visible={isOpen}
             onClose={this.onClose}>
                 <Search

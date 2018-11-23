@@ -32,7 +32,7 @@ h2 {
   color: #6b6b6b
 }
 
-.main-content {
+.main-content, .main-content-for-functional {
   margin: 24px 16px;
   padding: 24px;
   background: #fff;
@@ -51,4 +51,30 @@ h2 {
 
 .ant-tooltip-inner {
   width: fit-content
+}
+
+blockquote {
+	background:		#f9f9f9;
+	border-left:	10px solid #ccc;
+	margin:			1.5em 10px;
+	padding:		.5em 10px;
+	quotes:			"\201C""\201D""\2018""\2019";
+}
+
+blockquote p {
+	display:		inline;
+}
+
+.functional-settings-item {
+}
+
+.functional-settings-item > div {
+  display: flex;
+  justify-content: space-between;
+  width: 100%
+}
+
+.ant-badge {
+  padding-right: 10px;
+  padding-left: 10px;
 }
