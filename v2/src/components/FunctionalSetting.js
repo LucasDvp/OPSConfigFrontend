@@ -1,133 +1,139 @@
 import React, { Component } from 'react'
 import { Tabs, Button, List, Tag, Input, Switch, InputNumber, message, Badge } from 'antd'
 import MetadataDiscovery from './MetadataDiscovery'
+import FunctionalSubContent from './FunctionalSubContent'
 import _ from 'lodash'
 
 const Tab = Tabs.TabPane
-const typeColorMap = {
-    'string': 'magenta',
-    'bool': 'green',
-    'one or many': 'orange',
-    'object': 'blue',
-    'number': 'purple' 
-}
 const metadataSet = [
     {
-        group: 'Page',
-        subGroup: 'Feedback button',
-        key: 'Title suffix',
+        group: 'Page element',
+        key: 'Feedback button',
+        subGroup: 'Title suffix',
         type: 'string',
         des: 'Config the feedback url for product'
     },
     {
-        group: 'Page',
-        subGroup: 'Feedback',
-        key: 'Edit button',
+        group: 'Page element',
+        key: 'Feedback',
+        subGroup: 'Edit button',
         type: 'string',
         des: ''
     },
     {
-        group: 'Page',
-        subGroup: 'Feedback',
-        key: 'Feedback button',
+        group: 'Page element',
+        subGroup: 'Feedback button',
+        keys: [
+            {
+                key: 'Feedback github repo',
+                type: 'string'
+            },
+            {
+                key: 'Feedback product url',
+                type: 'string'
+            },
+            {
+                key: 'Accepts community contributions',
+                type: 'bool'
+            }
+        ],
+        des: ''
+    },
+    {
+        group: 'Page element',
+        key: 'Feedback',
+        subGroup: 'Download PDF button',
         type: 'string',
         des: ''
     },
     {
-        group: 'Page',
-        subGroup: 'Feedback',
-        key: 'Download PDF button',
-        type: 'string',
-        des: ''
-    },
-    {
-        group: 'Page',
-        subGroup: 'Archived page disclaimer',
-        key: 'Search button (search scope)',
-        type: 'number'
-    },
-    {
-        group: 'Page',
-        subGroup: 'Language selector',
-        key: 'Language selector',
-        type: 'one or many'
-    },
-    {
-        group: 'Page',
-        subGroup: 'Language selector',
+        group: 'Page element',
         key: 'Archived page disclaimer',
+        subGroup: 'Search button (search scope)',
+        type: 'number'
+    },
+    {
+        group: 'Page element',
+        key: 'Language selector',
+        subGroup: 'Language selector',
+        type: 'one or many'
+    },
+    {
+        group: 'Page element',
+        key: 'Language selector',
+        subGroup: 'Archived page disclaimer',
         type: 'one or many'
     },
     {
         group: 'Navigation on page',
-        subGroup: 'Header/footer',
         key: 'Header/footer',
+        subGroup: 'Header/footer',
         type: 'number'
     },
     {
         group: 'Navigation on page',
-        subGroup: 'Header/footer',
-        key: 'Breadcrumb',
+        key: 'Header/footer',
+        subGroup: 'Breadcrumb',
         type: 'number'
     },
     {
         group: 'Navigation on page',
-        subGroup: 'Header/footer',
-        key: 'Fusion TOC',
+        key: 'Header/footer',
+        subGroup: 'Fusion TOC',
         type: 'number'
     },
     {
         group: 'URL',
-        subGroup: 'Header/footer',
-        key: 'Base URL',
+        key: 'Header/footer',
+        subGroup: 'Base URL',
         type: 'number'
     },
     {
         group: 'URL',
-        subGroup: 'Header/footer',
-        key: 'Shared base path',
+        key: 'Header/footer',
+        subGroup: 'Shared base path',
         type: 'number'
     },
     {
         group: 'URL',
-        subGroup: 'Header/footer',
-        key: 'Redirection',
+        key: 'Header/footer',
+        subGroup: 'Redirection',
         type: 'number'
     },
     {
         group: 'Versioning',
-        subGroup: 'Header/footer',
-        key: 'Moniker range',
+        key: 'Header/footer',
+        subGroup: 'Moniker range',
         type: 'number'
     },
     {
         group: 'Localization',
-        subGroup: 'Header/footer',
-        key: 'Bilingual (side by side)',
+        key: 'Header/footer',
+        subGroup: 'Bilingual (side by side)',
         type: 'number'
     },
     {
         group: 'Cross Repository',
-        subGroup: 'Header/footer',
-        key: 'Cross Repository Reference (CRR)',
+        key: 'Header/footer',
+        subGroup: 'Cross Repository Reference (CRR)',
         type: 'number'
     },
     {
         group: 'Cross Repository',
-        subGroup: 'Header/footer',
-        key: 'XRef',
+        key: 'Header/footer',
+        subGroup: 'XRef',
         type: 'number'
     },
     {
         group: 'Build output',
-        subGroup: 'Header/footer',
-        key: 'PDF',
+        key: 'Header/footer',
+        subGroup: 'PDF',
         type: 'number'
     },
     {
         group: 'Build output',
-        subGroup: 'Header/footer',
-        key: 'Intellisense',
+        key: 'Header/footer',
+        subGroup: 'Intellisense',
         type: 'number'
     },
 ]
@@ -140,28 +146,28 @@ export default class FunctionalSetting extends Component {
 
     getGroupedCount = (metadatas) => {
         return metadatas.reduce((result, metadata) => {
-            const group = metadata.group
-            if (!result.hasOwnProperty(group)) {
-                result[group] = 1
+            const subGroup = metadata.subGroup
+            if (!result.hasOwnProperty(subGroup)) {
+                result[subGroup] = 1
             } else {
-                result[group] ++
+                result[subGroup] ++
             }
             return result
         }, {})
     }
 
     componentWillReceiveProps = (nextProps) => {
-        console.log(nextProps)
+       
+        //console.log(nextProps)
         if (this.props.docsetName === nextProps.docsetName) {
             const oldMetadatasNum = this.getGroupedCount(this.props.metadatas)
             const newMetadatasNum = this.getGroupedCount(nextProps.metadatas)
 
-            console.log(oldMetadatasNum, newMetadatasNum)
-
+            //console.log(oldMetadatasNum, newMetadatasNum)
             this.setState({
-                updatedItemNums: _.mapValues(newMetadatasNum, (value, key) => {
-                    return  value - (oldMetadatasNum[key] ? oldMetadatasNum[key] : 0)
-                })
+                updatedItemNums: _.mapValues(newMetadatasNum, (value, key) => 
+                    value - (oldMetadatasNum[key] ? oldMetadatasNum[key] : 0)
+                )
             })
         } else {
             this.setState({
@@ -194,44 +200,25 @@ export default class FunctionalSetting extends Component {
         message.success('New functinonal settings applied!')
     }
 
-    getInput(type, value) {
-        switch (type) {
-            case 'object':
-                return <Input size ='large' placeholder='Accept Json object value' defaultValue={value}/>
-            case 'one or many':
-                return <Input size ='large' placeholder='Accept one string or a string array' defaultValue={value}/>
-            case 'bool':
-                return <Switch size ='large' checkedChildren="True" unCheckedChildren="False"/>
-            case 'number':
-                return <InputNumber size ='large' defaultValue={value}/>
-            case 'string':
-            default:
-                return <Input size ='large' placeholder='Accept string value' defaultValue={value}/>
-        }
-    }
     render() {
         const { metadatas, docsetName } = this.props
         const groupedItems = _.groupBy(metadatas, 'group')
 
-        //console.log(groupedItems)
-        const tabItems = _.keys(groupedItems).map(group => 
-            <Tab tab={<Badge count={this.state.updatedItemNums[group]}><p>{group}</p></Badge>} key={group}>
-                <List 
-                dataSource={groupedItems[group]}
-                renderItem={ item => 
-                    <List.Item 
-                    key={item.key}
-                    extra={<div style={{width: '300px'}}>{this.getInput(item.type, item.value)}</div>}
-                    className='functional-settings-item'>
-                        <List.Item.Meta
-                        title={item.key}
-                        description={<Tag color={typeColorMap[item.type]}>{item.type}</Tag>}
-                        />
-                    </List.Item> 
-                }
-                />
-            </Tab>
-        )
+        const tabItems = _.keys(groupedItems).map(group => {
+            const subGroupItems = _.groupBy(groupedItems[group], 'subGroup')
+
+            //Filter the group level has updated
+            const didUpdated = this.state.updatedItemNums ? 
+            !_.isEmpty(_.filter(groupedItems[group], groupItems => this.state.updatedItemNums[groupItems.subGroup] > 0))
+            :
+            false
+            console.log(groupedItems[group], this.state.updatedItemNums)
+            return (
+                <Tab tab={<Badge dot={didUpdated}><p>{group}</p></Badge>} key={group}>
+                    <FunctionalSubContent subGroups={subGroupItems} updatedItemNums={this.state.updatedItemNums} />
+                </Tab>
+            )
+        })
 
         return (
             <div>

@@ -7,35 +7,40 @@ const { Header, Sider, Content } = Layout
 const menuNames = ['Docset1', 'Docset2', 'Docset3']
 const docset1Metadatas = [
     {
+        group: 'Page element',
         key: 'Feedback github repo',
-        group: 'Feedback',
+        subGroup: 'Feedback button',
         hasFileMetadata: true,
         value: 'MicrosoftDocs/azure-docs',
         type: 'string'
     },
     {
         key: 'Feedback product url',
-        group: 'Feedback',
+        subGroup: 'Feedback button',
+        group: 'Page element',
         value: 'https://feedback.azure.com/forums/34192--general-feedback',
         type: 'string'
     },
     {
-        key: 'Breadcrumb path',
-        group: 'Breadcrumb',
-        value: '/azure/bread/toc.json',
+        key: 'Edit repo type',
+        subGroup: 'Edit button',
+        group: 'Page element',
+        value: 'Github',
         type: 'string'
     },
     {
-        key: 'Brand',
-        group: 'Breadcrumb',
-        value: 'azure',
-        type: 'object'
+        key: 'Edit repo url',
+        subGroup: 'Edit button',
+        group: 'Page element',
+        value: 'MicrosoftDocs/azure-docs-pr',
+        type: 'string'
     },
     {
-        key: 'Accepts community contributions',
-        type: 'bool',
-        value: false,
-        group: 'Feedback'
+        group: 'Navigation on page',
+        key: 'Breadcrumb path',
+        subGroup: 'Breadcrumb',
+        value: '/azure/bread/toc.json',
+        type: 'string'
     }
 ]
 const docset2Metadatas = [
@@ -89,8 +94,12 @@ export default class Functional extends Component {
     }
 
     onSubmitMetadatas = (valuesToBeAdded) => {
+        // flat the metadataSets
+        const flattenMetadatas = _.flatMap(valuesToBeAdded, value => {
+            return value.keys ? value.keys.map(key => _.assign(key, value)) : []
+        })
         this.setState({
-            metadatas: _.uniqBy(_.concat(this.state.metadatas, valuesToBeAdded), 'key')
+            metadatas: _.uniqBy(_.concat(this.state.metadatas, flattenMetadatas), 'key')
         })
         message.success("Metadatas has added.")
     }

@@ -63,7 +63,7 @@ export default class MetadataDiscovery extends Component {
     }
 
     onToggleMetadata = (metadataKey) => () => {
-        const oldMetadata = _.find(this.state.metadatas, { 'key': metadataKey })
+        const oldMetadata = _.find(this.state.metadatas, { 'subGroup': metadataKey })
         oldMetadata.isSelected = !oldMetadata.isSelected
         this.setState({
             metadata: _.assign(this.state.metadatas, oldMetadata)
@@ -79,7 +79,7 @@ export default class MetadataDiscovery extends Component {
         } else if (metadata) {
             this.setState({
                 secondDrawerOpen: true,
-                secondDrawerTitle: metadata.key,
+                secondDrawerTitle: metadata.subGroup,
                 secondDrawerDes: metadata.des,
                 secondDrawerType: metadata.type,
                 secondDrawerGroup: metadata.group,
@@ -93,15 +93,14 @@ export default class MetadataDiscovery extends Component {
         
         const allMetadatas = this.state.metadatas.map(metadata => (
             <ListItem 
-            key={metadata.key}
+            key={metadata.subGroup}
             actions={[
-            <MetadataButton isSelected={metadata.isSelected} onToggleMetadata={this.onToggleMetadata(metadata.key)}/>,
+            <MetadataButton isSelected={metadata.isSelected} onToggleMetadata={this.onToggleMetadata(metadata.subGroup)}/>,
             <Button 
             type='dashed'  
             onClick={this.onToggleSecondDrawer(metadata)}>Detail</Button>]}>
                 <ListItem.Meta
-                
-                title={<TitleBox title={metadata.key} groupName={metadata.group}/>}
+                title={<TitleBox title={metadata.subGroup} groupName={metadata.group}/>}
                 description={<p>{metadata.des}</p>}/>
             </ListItem>
         ))
@@ -113,14 +112,14 @@ export default class MetadataDiscovery extends Component {
                     {
                        groupedMetadata[groupName].map(child => (
                            <ListItem 
-                           key={child.key}
+                           key={child.subGroup}
                            actions={[
-                           <MetadataButton isSelected={child.isSelected} onToggleMetadata={this.onToggleMetadata(child.key)}/>,
+                           <MetadataButton isSelected={child.isSelected} onToggleMetadata={this.onToggleMetadata(child.subGroup)}/>,
                            <Button 
                            type='dashed' 
                            onClick={this.onToggleSecondDrawer(child)}>Detail</Button>]}>
                                <ListItem.Meta
-                                title={<TitleBox title={child.key} groupName={groupName}/>}
+                                title={<TitleBox title={child.subGroup} groupName={groupName}/>}
                                 description={<p >{child.des}</p>}/>
                             </ListItem>
                        )) 
