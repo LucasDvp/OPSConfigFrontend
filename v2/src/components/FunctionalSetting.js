@@ -225,7 +225,7 @@ export default class FunctionalSetting extends Component {
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <h2>{docsetName}</h2>
                     <Button type='primary' icon='setting' onClick={this.onToggleAddMetadata}>
-                        Add Metadatas
+                        Add Functions
                     </Button>
                 </div>
                 <blockquote>Following functional settings will be applied docset-wide</blockquote>

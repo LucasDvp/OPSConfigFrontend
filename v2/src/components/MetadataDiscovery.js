@@ -137,14 +137,14 @@ export default class MetadataDiscovery extends Component {
 
         return (
             <Drawer 
-            title="Add Metadata"
+            title="Add Function"
             width="60%"
             visible={isOpen}
             onClose={this.onClose}>
                 <Search
                 enterButton='Search'
                 size='large'
-                placeholder='Seach Metadata'/>
+                placeholder='Seach Function'/>
                 <Tabs style={{marginTop: '20px'}} defaultActiveKey="0" onChange={this.onTabClick}>
                     <TabPane tab='All' key='0'>
                         <List size='large' style={listContainerStyle}>
@@ -178,14 +178,14 @@ export default class MetadataDiscovery extends Component {
                 visible={this.state.secondDrawerOpen}
                 >
                     <div className='second-drawer-content'>
-                        <div>Metadata Group: <Tag color='blue'>{this.state.secondDrawerGroup}</Tag></div>
-                        <div>Metadata Type: <Tag color='purple'>{this.state.secondDrawerType}</Tag></div>
+                        <div>Function Group: <Tag color='blue'>{this.state.secondDrawerGroup}</Tag></div>
+                        <div>Function Type: <Tag color='purple'>{this.state.secondDrawerType}</Tag></div>
                         <div>Used Count: <Tag color='cyan'>109</Tag></div>
                         <Alert 
                         type='success' 
                         description={_.isEmpty(this.state.secondDrawerDes) ? 'No Description' : this.state.secondDrawerDes} 
                         message='Description'/>
-                        <p>Metadata ScreenShot: </p>
+                        <p>Function ScreenShot: </p>
                         {detailImageDiv}
                         <Viewer
                         visible={this.state.imageVisible}
