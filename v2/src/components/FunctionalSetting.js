@@ -17,7 +17,7 @@ const metadataSet = [
             }
         ],
         imgurl: '/screenshot_of_titlesuffix.png',
-        des: 'Specify a suffix in page title, usually it is a product or brand. The page tile:\n\nDefine a title in the browser toolbar\n\nProvide a title for the page when it is added to favorites\n\nDisplay a title for the page in search-engine results'
+        des: <p>Specify a suffix in page title, usually it is a product or brand.<br/>The page tile:<br/>Define a title in the browser toolbar<br/>Provide a title for the page when it is added to favorites<br/>Display a title for the page in search-engine results'</p>
     },
     {
         group: 'Page element',
@@ -25,19 +25,22 @@ const metadataSet = [
         keys: [
             {
                 key: 'Accept public edits?',
-                type: 'bool'
+                type: 'bool',
+                keyDes: 'Enable to allow the public contribution'
             },
             {
                 key: 'The URL of the Git Repository open to public contributes',
-                type: 'string'
+                type: 'string',
+                keyDes: 'Specify the URL of the Git Repository open to public contributes'
             },
             {
                 key: 'The branch of the Git Repository open to public contributes',
-                type: 'string'
+                type: 'string',
+                keyDes: 'Specify the Branch of the Git Repository open to public contributes'
             },
             {
                 key: '[Optional] Set up automatic private-public synchronization',
-                type: 'bool'
+                keyDes: 'If your content repository is private, and the repository open to public contributes is another public repo, you can set up automatic syncing between the private repo and the public repo.'
             }
         ],
         imgurl: '/screenshot_of_editbutton.png',
@@ -49,11 +52,13 @@ const metadataSet = [
         keys: [
             {
                 key: 'The URL of product feedback',
-                type: 'string'
+                type: 'string',
+                keyDes: 'To provide product feedback, the customer clicks the "Give product feedback" button. The web page that is specified here for product feedback opens.'
             },
             {
                 key: 'The URL of documentation feedback',
-                type: 'string'
+                type: 'string',
+                keyDes: 'If the customer wants to provide new documentation feedback or comment on an existing issue, they click the button that says "Sign in to give documentation feedback".'
             }
         ],
         imgurl: '/screenshot_of_feedback.png',
@@ -76,11 +81,13 @@ const metadataSet = [
         group: 'Page element',
         key: 'Language selector',
         subGroup: 'Language selector',
+        groupNickName: 'Reference',
         type: 'one or many'
     },
     {
         group: 'Page element',
         key: 'Language selector',
+        groupNickName: 'Archived',
         subGroup: 'Archived page disclaimer',
         type: 'one or many'
     },

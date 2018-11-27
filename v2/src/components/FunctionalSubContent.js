@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, List, Tag, Input, InputNumber, Switch, Badge, Avatar } from 'antd'
+import { Menu, List, Tag, Input, InputNumber, Switch, Badge, Avatar, Icon } from 'antd'
 import '../App.css'
 import _ from 'lodash'
 
@@ -42,8 +42,9 @@ export default class FunctionalSubContent extends Component {
             case 'number':
                 return <InputNumber size ='large' defaultValue={value} />
             case 'string':
-            default:
                 return <Input size ='large' placeholder='Accept string value' value={value}/>
+            default:
+                return <div />
         }
     }
 
@@ -73,9 +74,9 @@ export default class FunctionalSubContent extends Component {
                     { subGroupNames.map((name, idx) => 
                         <Menu.Item key={idx}>
                             <Badge dot={updatedItemNums ? updatedItemNums[name] > 0 : false}>
-                                {name} <Tag color='gold' style={{ 
+                                {name} <Icon type='warning' theme="twoTone" twoToneColor="red" style={{ 
                                     display: (subGroupItemHasOutDatedValues && subGroupItemHasOutDatedValues[name]) ? 'initial' : 'none',
-                                }}>OutDated</Tag>
+                                }} />
                             </Badge>
                         </Menu.Item>
                     )
@@ -96,7 +97,9 @@ export default class FunctionalSubContent extends Component {
                             className='functional-settings-item'>
                                 <List.Item.Meta
                                 title={<div>
-                                    {item.key} <Tag color={typeColorMap[item.type]}>{item.type}</Tag> <Tag color='gold' style={{display: item.outDated ? 'initial' : 'none'}}>OutDated</Tag>
+                                    {item.key} <Tag color={typeColorMap[item.type]} style={{display: item.type ? 'initial': 'none'}}>{item.type}</Tag> 
+                                    <br/>
+                                    <Tag color='red' style={{display: item.outDated ? 'initial' : 'none'}}>This configuration is under retirement, we don't recommend to use it any longer</Tag>
                                 </div>}
                                 description={item.keyDes}
                                 /> 

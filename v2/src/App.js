@@ -11,7 +11,7 @@ export default function App() {
       <div className="App">
         <Route exact path='/' component={NewMetadata}/>
         <Route path='/old' component={OldMetadata}/>
-        <Route path='/new' component={Functional}/>
+        <Route path='/manage' component={Functional}/>
       </div>
     </Router>
   )

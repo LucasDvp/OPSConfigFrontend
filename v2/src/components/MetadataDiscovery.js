@@ -8,8 +8,8 @@ const Search = Input.Search
 const TabPane = Tabs.TabPane 
 const colors = {
     'Page element': 'magenta',
-    'Reference page element': 'orange', 
-    'Archived page element': 'green', 
+    'Reference': 'orange', 
+    'Archived': 'green', 
     'Navigation on page': 'yellow',
     'URL': 'orange', 
     'Versioning': 'cyan', 
@@ -24,12 +24,12 @@ function MetadataButton({ isSelected, onToggleMetadata }) {
         </Button>
     )
 }
-function TitleBox({ title, groupName}) {
-    const color = colors[groupName]
+function TitleBox({ title, groupNickName}) {
+    const color = colors[groupNickName]
     return (
         <Row gutter={8} type='flex'>
             <Col><p>{title}</p></Col>
-            <Col><Tag color={color}>{groupName}</Tag></Col>
+            <Col><Tag color={color} style={{display: groupNickName ? 'initial': 'none'}}>{groupNickName}</Tag></Col>
         </Row>
     )
 }
@@ -74,21 +74,10 @@ export default class MetadataDiscovery extends Component {
     render() {
         const { isOpen } = this.props
         
-        const allMetadatas = this.state.metadatas.map(metadata => (
-            <ListItem 
-            key={metadata.subGroup}
-            actions={[
-            <MetadataButton isSelected={metadata.isSelected} onToggleMetadata={this.onToggleMetadata(metadata.subGroup)}/>
-            ]}>
-                <ListItem.Meta
-                title={<TitleBox title={metadata.subGroup} groupName={metadata.group}/>}
-                description={<p>{metadata.des}</p>}/>
-            </ListItem>
-        ))
         const listContainerStyle = { height: '780px', overflowY: 'auto' }
         const groupedMetadata = _.groupBy(this.state.metadatas, 'group')
         const groupedMetadataItems = _.keys(groupedMetadata).map((groupName, index) => (
-            <TabPane tab={groupName} key={index+1}>
+            <TabPane tab={groupName} key={index}>
                 <List size='large' style={listContainerStyle}>
                     {
                        groupedMetadata[groupName].map(child => (
@@ -98,7 +87,7 @@ export default class MetadataDiscovery extends Component {
                            <MetadataButton isSelected={child.isSelected} onToggleMetadata={this.onToggleMetadata(child.subGroup)}/>
                            ]}>
                                <ListItem.Meta
-                                title={<TitleBox title={child.subGroup} groupName={groupName}/>}
+                                title={<TitleBox title={child.subGroup} groupNickName={child.groupNickName} />}
                                 description={<p >{child.des}</p>}/>
                             </ListItem>
                        )) 
@@ -118,11 +107,6 @@ export default class MetadataDiscovery extends Component {
                 size='large'
                 placeholder='Seach Configuration'/>
                 <Tabs style={{marginTop: '20px'}} defaultActiveKey="0" onChange={this.onTabClick}>
-                    <TabPane tab='All' key='0'>
-                        <List size='large' style={listContainerStyle}>
-                            {allMetadatas}
-                        </List>
-                    </TabPane >
                     {groupedMetadataItems}
                 </Tabs>
                 <div
