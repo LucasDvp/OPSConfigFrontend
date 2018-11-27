@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, List, Tag, Input, InputNumber, Switch, Badge, Avatar, Icon } from 'antd'
+import { Menu, List, Tag, Input, InputNumber, Switch, Badge, Avatar, Icon, Collapse } from 'antd'
 import '../App.css'
 import _ from 'lodash'
 
@@ -93,6 +93,16 @@ export default class FunctionalSubContent extends Component {
                         renderItem={ item => 
                             <List.Item 
                             key={item.key}
+                            actions={[
+                            <Collapse bordered={false} style={{display: item.fileMetadata ? 'block' : 'none'}}>
+                                <Collapse.Panel header="Apply to subset of docset only?" key="1">
+                                <div style={{display: 'flex', flexDirection: 'column', textAlign: 'left'}}>
+                                    <h4>{item.fileMetadata ? item.fileMetadata.name : ''}</h4>
+                                    <p>{item.fileMetadata ? item.fileMetadata.des : ''}</p>
+                                    <Input size ='large' placeholder='Accept Json object value' defaultValue={item.fileMetadata ? item.fileMetadata.value : ''}/>
+                                </div>
+                                </Collapse.Panel>
+                            </Collapse>]}
                             extra={<div style={{width: '700px'}}>{this.getInput(item, item.type, item.value)}</div>}
                             className='functional-settings-item'>
                                 <List.Item.Meta

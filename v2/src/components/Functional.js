@@ -14,7 +14,12 @@ const docset1Metadatas = [
         type: 'string',
         keyDes: 'To provide product feedback, the customer clicks the "Give product feedback" button. The web page that is specified here for product feedback opens.',
         des: 'Add the documentation feedback control which directs users to submit product or documentation feedback',
-        imgurl: '/screenshot_of_feedback.png'
+        imgurl: '/screenshot_of_feedback.png',
+        fileMetadata: {
+            name: 'Apply the configuration to subset of docset',
+            des: 'You need to provide a list of GitHub file path and feedback URL',
+            value: '{"path1": "url1", "path2": "url2"}'
+        }
     },
     {
         key: 'The URL of documentation feedback',

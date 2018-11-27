@@ -73,3 +73,23 @@ blockquote p {
   padding-right: 10px;
   padding-left: 10px;
 }
+
+.ant-list-item-main {
+  flex-direction: column
+}
+
+.ant-list-item-action {
+  margin-left: 0px;
+}
+
+.ant-collapse-header {
+  color: #61dafb !important;
+  padding: 15px 0px !important;
+  text-align: left
+}
+.ant-collapse-header > i {
+  display: none !important;
+}
+.ant-collapse-content-box {
+  padding: 16px 0 !important;
+}
