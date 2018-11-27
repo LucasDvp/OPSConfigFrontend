@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Tabs, Button, List, Tag, Input, Switch, InputNumber, message, Badge } from 'antd'
+import { Tabs, Button, message, Badge } from 'antd'
 import MetadataDiscovery from './MetadataDiscovery'
 import FunctionalSubContent from './FunctionalSubContent'
 import _ from 'lodash'
@@ -8,36 +8,56 @@ const Tab = Tabs.TabPane
 const metadataSet = [
     {
         group: 'Page element',
-        key: 'Feedback button',
         subGroup: 'Title suffix',
-        type: 'string',
-        des: 'Config the feedback url for product'
+        keys: [
+            {
+                key: 'Title Suffix',
+                type: 'string',
+                keyDes: 'Specify a suffix in page title'
+            }
+        ],
+        imgurl: '/screenshot_of_titlesuffix.png',
+        des: 'Specify a suffix in page title, usually it is a product or brand. The page tile:\n\nDefine a title in the browser toolbar\n\nProvide a title for the page when it is added to favorites\n\nDisplay a title for the page in search-engine results'
     },
     {
         group: 'Page element',
-        key: 'Feedback',
         subGroup: 'Edit button',
-        type: 'string',
-        des: ''
+        keys: [
+            {
+                key: 'Accept public edits?',
+                type: 'bool'
+            },
+            {
+                key: 'The URL of the Git Repository open to public contributes',
+                type: 'string'
+            },
+            {
+                key: 'The branch of the Git Repository open to public contributes',
+                type: 'string'
+            },
+            {
+                key: '[Optional] Set up automatic private-public synchronization',
+                type: 'bool'
+            }
+        ],
+        imgurl: '/screenshot_of_editbutton.png',
+        des: 'By enabling it the docs site will render a Edit button in the right upper corner of the page, and the Edit button will redirect the end users to a public repository where community contributions to the content can be added.'
     },
     {
         group: 'Page element',
         subGroup: 'Feedback button',
         keys: [
             {
-                key: 'Feedback github repo',
+                key: 'The URL of product feedback',
                 type: 'string'
             },
             {
-                key: 'Feedback product url',
+                key: 'The URL of documentation feedback',
                 type: 'string'
-            },
-            {
-                key: 'Accepts community contributions',
-                type: 'bool'
             }
         ],
-        des: ''
+        imgurl: '/screenshot_of_feedback.png',
+        des: 'Add the documentation feedback control which directs users to submit product or documentation feedback'
     },
     {
         group: 'Page element',
@@ -224,22 +244,19 @@ export default class FunctionalSetting extends Component {
             <div>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <h2>{docsetName}</h2>
-                    <Button type='primary' icon='setting' onClick={this.onToggleAddMetadata}>
-                        Add Functions
-                    </Button>
-                </div>
-                <blockquote>Following functional settings will be applied docset-wide</blockquote>
+                    <div>
+                        <Button type='dashed' icon='plus' onClick={this.onToggleAddMetadata}>
+                            Add Config
+                        </Button>
+                            
+                        <Button type="primary" onClick={this.onFakeChangeMetadatas} style={{marginLeft: '10px'}}>
+                            Save
+                        </Button>
+                    </div>  
+                </div>                
                 <Tabs onChange={this.onClickTabs} type='card' size='large' style={{marginTop: '20px'}}>
                     {tabItems}
                 </Tabs>
-                <Button.Group style={{width: '100%', marginTop: '20px'}}>
-                    <Button type="primary" size='large' style={{width: '50%'}} onClick={this.onFakeChangeMetadatas}>
-                        Changed
-                    </Button>
-                    <Button type="danger" size='large' style={{width: '50%'}}>
-                        Revert
-                    </Button>
-                </Button.Group>
                 <MetadataDiscovery 
                     isOpen={this.state.openAddMetadata} 
                     onSubmitMetadatas={this.onSubmitMetadatas} 

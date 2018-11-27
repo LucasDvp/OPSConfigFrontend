@@ -4,37 +4,28 @@ import FunctionalSetting from './FunctionalSetting';
 import _ from 'lodash'
 
 const { Header, Sider, Content } = Layout
-const menuNames = ['Docset1', 'Docset2', 'Docset3']
+const menuNames = ['New Hope', 'Docset2', 'Docset3']
 const docset1Metadatas = [
     {
-        group: 'Page element',
-        key: 'Feedback github repo',
-        subGroup: 'Feedback button',
-        hasFileMetadata: true,
-        value: 'MicrosoftDocs/azure-docs',
-        type: 'string'
-    },
-    {
-        key: 'Feedback product url',
+        key: 'The URL of product feedback',
         subGroup: 'Feedback button',
         group: 'Page element',
         value: 'https://feedback.azure.com/forums/34192--general-feedback',
-        type: 'string'
+        type: 'string',
+        keyDes: 'To provide product feedback, the customer clicks the "Give product feedback" button. The web page that is specified here for product feedback opens.',
+        des: 'Add the documentation feedback control which directs users to submit product or documentation feedback',
+        imgurl: '/screenshot_of_feedback.png'
     },
     {
-        key: 'Edit repo type',
-        subGroup: 'Edit button',
+        key: 'The URL of documentation feedback',
+        subGroup: 'Feedback button',
         group: 'Page element',
-        value: 'Github',
-        type: 'string'
+        value: 'https://github.com/azure/azure-rest-api-specs',
+        type: 'string',
+        keyDes: 'If the customer wants to provide new documentation feedback or comment on an existing issue, they click the button that says "Sign in to give documentation feedback".',
+        des: 'Add the documentation feedback control which directs users to submit product or documentation feedback',
     },
-    {
-        key: 'Edit repo url',
-        subGroup: 'Edit button',
-        group: 'Page element',
-        value: 'MicrosoftDocs/azure-docs-pr',
-        type: 'string'
-    },
+    
     {
         group: 'Navigation on page',
         key: 'Breadcrumb path',
@@ -44,28 +35,19 @@ const docset1Metadatas = [
     }
 ]
 const docset2Metadatas = [
-    {
-        key: 'Feedback github repo',
-        group: 'Feedback',
-        hasFileMetadata: true,
-        value: 'MicrosoftDocs/azure-docs',
-        type: 'string'
-    },
-    {
-        key: 'Feedback product url',
-        group: 'Feedback',
-        value: 'https://feedback.azure.com/forums/34192--general-feedback',
-        type: 'string'
-    }
+    
 ]
 
 const docset3Metadatas = [
     {
         key: 'Feedback github repo',
-        group: 'Feedback',
-        hasFileMetadata: true,
+        subGroup: 'Feedback button',
+        group: 'Page element',
         value: 'MicrosoftDocs/azure-docs',
-        type: 'string'
+        type: 'string',
+        outDated: true,
+        imgurl: '/screenshot_of_feedback.png',
+        keyDes: 'If the customer wants to provide new documentation feedback or comment on an existing issue, they click the button that says "Sign in to give documentation feedback".',
     }
 ]
 
@@ -139,7 +121,7 @@ export default class Functional extends Component {
                     type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                     onClick={this.onToggleCollapsed}
                     />
-                    <span style={{paddingLeft: "10px"}}>OPS Functional Settings</span>
+                    <span style={{paddingLeft: "10px"}}>OPS Configuration</span>
                 </div>
                 </Header>
                 <Content className="main-content-for-functional">

@@ -4,7 +4,6 @@ import MetadataSetting from './MetadataSetting'
 import RepoConfigs from './RepoConfigs'
 import _ from 'lodash'
 import '../App.css'
-import detailImg from '../res/feedback_url_image.png'
 import MetadataRegister from './MetadataRegister';
 
 const { Header, Sider, Content } = Layout
@@ -55,7 +54,6 @@ const metadataSet = [
         group: 'Feedback',
         key: 'feedback product url',
         value: 'feedback_product_url',
-        imgUrl: detailImg,
         type: 'string',
         des: 'Config the feedback url for product'
     },

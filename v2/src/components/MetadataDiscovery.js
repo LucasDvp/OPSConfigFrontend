@@ -2,13 +2,21 @@ import React, { Component } from 'react'
 import { List, Button, Drawer, Input, Tabs, Tag, Row, Col, Alert, Badge } from 'antd'
 import _ from 'lodash'
 import '../MetadataDiscovery.css'
-import Viewer from 'react-viewer';
-import 'react-viewer/dist/index.css';
 
 const ListItem = List.Item
 const Search = Input.Search
 const TabPane = Tabs.TabPane 
-const colors = ['magenta', 'orange', 'green', 'yellow', 'orange', 'cyan', 'blue', 'purple']
+const colors = {
+    'Page element': 'magenta',
+    'Reference page element': 'orange', 
+    'Archived page element': 'green', 
+    'Navigation on page': 'yellow',
+    'URL': 'orange', 
+    'Versioning': 'cyan', 
+    'Localization': 'blue', 
+    'Cross Repository': 'purple',
+    'Build output': 'black'
+}
 function MetadataButton({ isSelected, onToggleMetadata }) {
     return (
         <Button type={isSelected ? 'danger' : 'primary'} onClick={onToggleMetadata}>
@@ -17,7 +25,7 @@ function MetadataButton({ isSelected, onToggleMetadata }) {
     )
 }
 function TitleBox({ title, groupName}) {
-    const color = colors[groupName.length % colors.length]
+    const color = colors[groupName]
     return (
         <Row gutter={8} type='flex'>
             <Col><p>{title}</p></Col>
@@ -35,14 +43,7 @@ export default class MetadataDiscovery extends Component {
 
     get initState()  {
         return {
-            metadatas: this.props.globalMetadatas.map(metadata => _.assign(metadata, {isSelected: false})),
-            secondDrawerOpen: false,
-            secondDrawerTitle: '',
-            secondDrawerDes: '',
-            secondDrawerGroup: '',
-            secondDrawerImageDetail: '',
-            secondDrawerType: '',
-            imageVisible: false
+            metadatas: this.props.globalMetadatas.map(metadata => _.assign(metadata, {isSelected: false}))
         }
     }
 
@@ -70,24 +71,6 @@ export default class MetadataDiscovery extends Component {
         })
     }
 
-    onToggleSecondDrawer = (metadata) => () => {
-        if (this.state.secondDrawerOpen)
-        {
-            this.setState({
-                secondDrawerOpen: false
-            })
-        } else if (metadata) {
-            this.setState({
-                secondDrawerOpen: true,
-                secondDrawerTitle: metadata.subGroup,
-                secondDrawerDes: metadata.des,
-                secondDrawerType: metadata.type,
-                secondDrawerGroup: metadata.group,
-                secondDrawerImageDetail: metadata.imgUrl
-            })
-        }
-    }
-
     render() {
         const { isOpen } = this.props
         
@@ -95,10 +78,8 @@ export default class MetadataDiscovery extends Component {
             <ListItem 
             key={metadata.subGroup}
             actions={[
-            <MetadataButton isSelected={metadata.isSelected} onToggleMetadata={this.onToggleMetadata(metadata.subGroup)}/>,
-            <Button 
-            type='dashed'  
-            onClick={this.onToggleSecondDrawer(metadata)}>Detail</Button>]}>
+            <MetadataButton isSelected={metadata.isSelected} onToggleMetadata={this.onToggleMetadata(metadata.subGroup)}/>
+            ]}>
                 <ListItem.Meta
                 title={<TitleBox title={metadata.subGroup} groupName={metadata.group}/>}
                 description={<p>{metadata.des}</p>}/>
@@ -114,10 +95,8 @@ export default class MetadataDiscovery extends Component {
                            <ListItem 
                            key={child.subGroup}
                            actions={[
-                           <MetadataButton isSelected={child.isSelected} onToggleMetadata={this.onToggleMetadata(child.subGroup)}/>,
-                           <Button 
-                           type='dashed' 
-                           onClick={this.onToggleSecondDrawer(child)}>Detail</Button>]}>
+                           <MetadataButton isSelected={child.isSelected} onToggleMetadata={this.onToggleMetadata(child.subGroup)}/>
+                           ]}>
                                <ListItem.Meta
                                 title={<TitleBox title={child.subGroup} groupName={groupName}/>}
                                 description={<p >{child.des}</p>}/>
@@ -128,23 +107,16 @@ export default class MetadataDiscovery extends Component {
             </TabPane>
         ))
 
-        const detailImageDiv = _.isEmpty(this.state.secondDrawerImageDetail) ? 
-        <span className='no-detail-screenshot'>No Detail ScreenShot</span> :
-        <img 
-        src={this.state.secondDrawerImageDetail}
-        alt='No Detail ScreenShot'
-        onClick={() => {this.setState({ imageVisible: !this.state.imageVisible })}} />  
-
         return (
             <Drawer 
-            title="Add Function"
+            title="Add Configuration"
             width="60%"
             visible={isOpen}
             onClose={this.onClose}>
                 <Search
                 enterButton='Search'
                 size='large'
-                placeholder='Seach Function'/>
+                placeholder='Seach Configuration'/>
                 <Tabs style={{marginTop: '20px'}} defaultActiveKey="0" onChange={this.onTabClick}>
                     <TabPane tab='All' key='0'>
                         <List size='large' style={listContainerStyle}>
@@ -170,30 +142,6 @@ export default class MetadataDiscovery extends Component {
                         Add
                     </Button>
                 </div>
-                <Drawer
-                title={this.state.secondDrawerTitle}
-                width={400}
-                closable={false}
-                onClose={this.onToggleSecondDrawer()}
-                visible={this.state.secondDrawerOpen}
-                >
-                    <div className='second-drawer-content'>
-                        <div>Function Group: <Tag color='blue'>{this.state.secondDrawerGroup}</Tag></div>
-                        <div>Function Type: <Tag color='purple'>{this.state.secondDrawerType}</Tag></div>
-                        <div>Used Count: <Tag color='cyan'>109</Tag></div>
-                        <Alert 
-                        type='success' 
-                        description={_.isEmpty(this.state.secondDrawerDes) ? 'No Description' : this.state.secondDrawerDes} 
-                        message='Description'/>
-                        <p>Function ScreenShot: </p>
-                        {detailImageDiv}
-                        <Viewer
-                        visible={this.state.imageVisible}
-                        onClose={() => { this.setState({ imageVisible: false }); } }
-                        images={[{src: this.state.secondDrawerImageDetail, alt: 'Docs ScreenShot Details'}]}
-                        />
-                    </div>
-                </Drawer>
             </Drawer>
         )
     }
