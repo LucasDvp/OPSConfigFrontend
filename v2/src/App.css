@@ -84,12 +84,30 @@ blockquote p {
 
 .ant-collapse-header {
   color: #61dafb !important;
-  padding: 15px 0px !important;
-  text-align: left
+  padding: 0 0 12px 0 !important;
+  text-align: left;
 }
 .ant-collapse-header > i {
   display: none !important;
 }
 .ant-collapse-content-box {
-  padding: 16px 0 !important;
+  padding: 0 !important;
+  display: flex;
+}
+
+.function-item-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0px;
+}
+.function-item-main-panel {
+  width: 100%;
+  display: flex
+}
+
+.function-item-title {
+  width: 45%;
+}
+.function-item-sub-panel {
+  width: 50%;
 }

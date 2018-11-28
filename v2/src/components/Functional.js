@@ -16,9 +16,10 @@ const docset1Metadatas = [
         des: 'Add the documentation feedback control which directs users to submit product or documentation feedback',
         imgurl: '/screenshot_of_feedback.png',
         fileMetadata: {
-            name: 'Apply the configuration to subset of docset',
+            key: 'Apply the configuration to subset of docset',
             des: 'You need to provide a list of GitHub file path and feedback URL',
-            value: '{"path1": "url1", "path2": "url2"}'
+            value: '{"path1": "url1", "path2": "url2"}',
+            type: 'object'
         }
     },
     {

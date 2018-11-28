@@ -48,11 +48,11 @@ export default class MetadataDiscovery extends Component {
     }
 
     onTabClick = (value) => {
-        console.log(value)
+        //console.log(value)
     }
 
     onClose = () => {
-        console.log(this.props.globalMetadatas)
+        //console.log(this.props.globalMetadatas)
         this.setState(this.initState)
         this.props.onCancel();
     }

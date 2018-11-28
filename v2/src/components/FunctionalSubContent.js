@@ -10,6 +10,71 @@ const typeColorMap = {
     'object': 'blue',
     'number': 'purple' 
 }
+
+class FunctionalItem extends Component {
+    getInput = (type, value) => {
+        value = value ? value : (type === 'bool' ? false : '') 
+        switch (type) {
+            case 'object':
+                return <Input size ='large' placeholder='Accept Json object value' defaultValue={value}/>
+            case 'one or many':
+                return <Input size ='large' placeholder='Accept one string or a string array' defaultValue={value}/>
+            case 'bool':
+                return <Switch size ='large' checkedChildren="True" unCheckedChildren="False" defaultChecked={value} />
+            case 'number':
+                return <InputNumber size ='large' defaultValue={value} />
+            case 'string':
+                return <Input size ='large' placeholder='Accept string value' value={value}/>
+            default:
+                return <div />
+        }
+    }
+
+    render() {
+        const { item, itemKey } = this.props
+        const { key, keyDes, type, value, outDated } = item
+        const hasFileMetadata = item.fileMetadata ? true : false
+        const fileMetadata = hasFileMetadata ? item.fileMetadata : {}
+        const fileMetadataKey = fileMetadata.key
+        const fileMetadataType = fileMetadata.type
+        const fileMetadataValue = fileMetadata.value
+        const fileMetadataDes = fileMetadata.des
+
+        //console.log(key, des, type, value, outDated, fileMetadata)
+
+        return (
+            <div className="function-item-panel" key={itemKey}>
+                <div className="function-item-main-panel">
+                    <div className="function-item-title">
+                        <h4>
+                            {key} <Tag color={typeColorMap[type]} style={{display: type ? 'initial': 'none'}}>{type}</Tag> 
+                            <br/>
+                            <Tag color='red' style={{display: outDated ? 'initial' : 'none'}}>This configuration is under retirement, we don't recommend to use it any longer</Tag>
+                        </h4>
+                        <p>{keyDes}</p>
+                    </div>
+                    <div className="function-item-sub-panel">
+                        {this.getInput(type, value)}
+                    </div>
+                </div>
+                <div className="function-item-file-metadata-panel">
+                    <Collapse bordered={false} style={{display: hasFileMetadata ? 'flex' : 'none', flexDirection: 'column'}}>
+                        <Collapse.Panel header="Apply to subset of docset only?" key="1">
+                            <div className="function-item-title">
+                                <h4>{fileMetadataKey} <Tag color={typeColorMap[fileMetadataType]} style={{display: fileMetadataType ? 'initial': 'none'}}>{fileMetadataType}</Tag> </h4>
+                                <p>{fileMetadataDes}</p>
+                            </div>
+                            <div className="function-item-sub-panel">
+                                {this.getInput(fileMetadataType, fileMetadataValue)}
+                            </div>
+                        </Collapse.Panel>
+                    </Collapse>
+                </div>
+            </div>
+        );
+    }
+}
+
 export default class FunctionalSubContent extends Component { 
     state = {
         selectedMenuKey: '0'
@@ -29,24 +94,7 @@ export default class FunctionalSubContent extends Component {
         })
     }
 
-    getInput(item, type, value) {
-        value = value ? value : (type === 'bool' ? false : '') 
-        console.log(item, type, value)
-        switch (type) {
-            case 'object':
-                return <Input size ='large' placeholder='Accept Json object value' defaultValue={value}/>
-            case 'one or many':
-                return <Input size ='large' placeholder='Accept one string or a string array' defaultValue={value}/>
-            case 'bool':
-                return <Switch size ='large' checkedChildren="True" unCheckedChildren="False" defaultChecked={value} />
-            case 'number':
-                return <InputNumber size ='large' defaultValue={value} />
-            case 'string':
-                return <Input size ='large' placeholder='Accept string value' value={value}/>
-            default:
-                return <div />
-        }
-    }
+    
 
     render() {
         const { subGroups, updatedItemNums } = this.props
@@ -88,34 +136,9 @@ export default class FunctionalSubContent extends Component {
                     <blockquote>{selectedSubGroupDes}</blockquote>
                     <img style={{ width: 450 }} src={selectedSubGroupImgUrl} alt='no img'/>
                     </div>
-                    <List 
-                        dataSource={subGroupItems[selectedSubGroupName]}
-                        renderItem={ item => 
-                            <List.Item 
-                            key={item.key}
-                            actions={[
-                            <Collapse bordered={false} style={{display: item.fileMetadata ? 'block' : 'none'}}>
-                                <Collapse.Panel header="Apply to subset of docset only?" key="1">
-                                <div style={{display: 'flex', flexDirection: 'column', textAlign: 'left'}}>
-                                    <h4>{item.fileMetadata ? item.fileMetadata.name : ''}</h4>
-                                    <p>{item.fileMetadata ? item.fileMetadata.des : ''}</p>
-                                    <Input size ='large' placeholder='Accept Json object value' defaultValue={item.fileMetadata ? item.fileMetadata.value : ''}/>
-                                </div>
-                                </Collapse.Panel>
-                            </Collapse>]}
-                            extra={<div style={{width: '700px'}}>{this.getInput(item, item.type, item.value)}</div>}
-                            className='functional-settings-item'>
-                                <List.Item.Meta
-                                title={<div>
-                                    {item.key} <Tag color={typeColorMap[item.type]} style={{display: item.type ? 'initial': 'none'}}>{item.type}</Tag> 
-                                    <br/>
-                                    <Tag color='red' style={{display: item.outDated ? 'initial' : 'none'}}>This configuration is under retirement, we don't recommend to use it any longer</Tag>
-                                </div>}
-                                description={item.keyDes}
-                                /> 
-                            </List.Item> 
-                        } 
-                    />
+                    <div>
+                        {subGroupItems[selectedSubGroupName].map((item, idx) => <FunctionalItem item={item} itemKey={idx}/>)}
+                    </div>
                 </div>
             </div>
         );

@@ -49,7 +49,6 @@ class MetadataRegisterForm extends Component {
             if (!err) {
                 values.key = values.name
                 values.group = _.first(values.group)
-                console.log("hehe", values)
                 this.props.onAddMetadataSet(values)
             }
         });

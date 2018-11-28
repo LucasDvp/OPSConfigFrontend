@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Tabs, Button, message, Badge } from 'antd'
 import MetadataDiscovery from './MetadataDiscovery'
 import FunctionalSubContent from './FunctionalSubContent'
+import OldMetadataSetting from './OldMetadataSetting'
 import _ from 'lodash'
 
 const Tab = Tabs.TabPane
@@ -227,6 +228,24 @@ export default class FunctionalSetting extends Component {
         message.success('New functinonal settings applied!')
     }
 
+    onRenderPages = (group, subGroupItems, des) => {
+        if (group === 'Metadata') {
+            return (
+                <OldMetadataSetting
+                metadatas={subGroupItems[group]}
+                name={group}
+                des={des}
+                />
+            )
+        } else {
+            return  (
+                <FunctionalSubContent 
+                subGroups={subGroupItems} 
+                updatedItemNums={this.state.updatedItemNums} />
+            )
+        }
+    }
+
     render() {
         const { metadatas, docsetName } = this.props
         const groupedItems = _.groupBy(metadatas, 'group')
@@ -239,10 +258,10 @@ export default class FunctionalSetting extends Component {
             !_.isEmpty(_.filter(groupedItems[group], groupItems => this.state.updatedItemNums[groupItems.subGroup] > 0))
             :
             false
-            console.log(groupedItems[group], this.state.updatedItemNums)
+            //console.log(groupedItems[group], this.state.updatedItemNums)
             return (
                 <Tab tab={<Badge dot={didUpdated}><p>{group}</p></Badge>} key={group}>
-                    <FunctionalSubContent subGroups={subGroupItems} updatedItemNums={this.state.updatedItemNums} />
+                    {this.onRenderPages(group, subGroupItems, groupedItems[group].des)} 
                 </Tab>
             )
         })
@@ -255,13 +274,12 @@ export default class FunctionalSetting extends Component {
                         <Button type='dashed' icon='plus' onClick={this.onToggleAddMetadata}>
                             Add Config
                         </Button>
-                            
                         <Button type="primary" onClick={this.onFakeChangeMetadatas} style={{marginLeft: '10px'}}>
                             Save
                         </Button>
                     </div>  
                 </div>                
-                <Tabs onChange={this.onClickTabs} type='card' size='large' style={{marginTop: '20px'}}>
+                <Tabs onChange={this.onClickTabs} type='card' style={{marginTop: '20px'}}>
                     {tabItems}
                 </Tabs>
                 <MetadataDiscovery 
